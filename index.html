@@ -148,8 +148,9 @@ https://templatemo.com/tm-590-topic-listing
                                             <label class="form-label">Institution</label>
                                             <input type="text" class="form-control" name="institution" placeholder="Institution name" required>
                                         </div>
-                                        <button type="submit"  class="btn btn-green w-100">Register</button>
+                                        <button type="submit" class="btn btn-green w-100">Register</button>
                                     </form>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -233,6 +234,39 @@ BruGoByte@gmail.com
 
 
         <!-- JAVASCRIPT FILES -->
+        <script>
+            document.getElementById("tantAdminForm").addEventListener("submit", async function(event) {
+                event.preventDefault();
+            
+                const formData = {
+                    name: document.querySelector("input[name='name']").value,
+                    user_name: document.querySelector("input[name='user_name']").value,
+                    email: document.querySelector("input[name='email']").value,
+                    password: document.querySelector("input[name='password']").value,
+                    institution: document.querySelector("input[name='institution']").value
+                };
+            
+                try {
+                    const response = await fetch("http://localhost:5000/api/auth/register-tantadmin", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(formData)
+                    });
+            
+                    const result = await response.json();
+                    
+                    if (response.ok) {
+                        alert("Registration successful!");
+                        document.getElementById("tantAdminForm").reset();
+                    } else {
+                        alert(result.error || "Registration failed");
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("An error occurred while registering.");
+                }
+            });
+            </script>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/jquery.sticky.js"></script>
